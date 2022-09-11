@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Image } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Provider } from "react-redux";
+import store from "./store/index";
+
+import { NavigationContainer } from "@react-navigation/native";
+
+import Home from "./screens/Home";
+import ExpenseDetails from "./screens/ExpenseDetails";
+import AddExpense from './screens/AddExpense';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <StatusBar style="light" />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Group
+            screenOptions={{
+              headerStyle: { backgroundColor: "#00204a" },
+              headerTitleAlign: "center",
+              headerTitleStyle: { color: "#FDB44B", fontSize: 32 },
+            }}
+          >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="ExpenseDetails" component={ExpenseDetails} />
+            <Stack.Screen name="AddExpense" component={AddExpense} />
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  layout: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "column",
+    alignItems: "center",
   },
 });
